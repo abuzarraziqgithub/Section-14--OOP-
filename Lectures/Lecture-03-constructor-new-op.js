@@ -4,9 +4,21 @@
 //* THERE IS A CONVENTION THAT WE START CONSTRUCTOR FUNCTION WITH THE CAPITAL LETTER.
 //* THE ARROW FUNCTION WILL NOT WORK AS A FUNCTION CONSTRUCTOR, BCZ IT DOESN'T HAVE THIER OWN "this" KEYWORD.
 
-const Person = function (firstName, birthYear) {};
+const Person = function (firstName, birthYear) {
+  //* INSTANCE PROPERTIES
+  this.firstName = firstName;
+  this.birthYear = birthYear;
 
-new Person("Abuzar", 2001);
+  //! NEVER DO THIS
+  //* IT WILL CREATE, PERFORMANCE ISSUE AND HUNDREDS OF COPIES FOR HUNDREDS OF INSTANCES.
+  //! IT IS A BAD PRACTICE.
+  this.calcAge = function () {
+    console.log(2027 - birthYear);
+  };
+};
+
+const abu = new Person("Abuzar", 2001);
+console.log(abu);
 //* THE "new" KEYWORD IS A VERY SPECIAL TYPE OF KEYWORD, BCZ IT CALL THE ABOVE (PERSON) FUNCTION
 
 //? FOUR STEPS HAPPENS BEHIND THE SCENES, WHEN WE WRITE THE "new" KEYWORD.
@@ -15,3 +27,9 @@ new Person("Abuzar", 2001);
 //* IN THE EXECUTION CONTEXT OF THE PERSON FUNCTION, THE "this" KEYWORD WILL POINT THE OBJECT THAT WAS CREATED.
 //* OBJECT IS LINKED TO PROTOTYPE.
 //* FUNCTION AUTOMATICALLY RETURNS THAT EMPTY OBJECT FROM THE BEGINNING.
+
+const jack = new Person("Jack", 2000);
+console.log(jack);
+console.log(jack instanceof Person);
+const diana = new Person("Diana", 2004);
+console.log(diana.birthYear);
