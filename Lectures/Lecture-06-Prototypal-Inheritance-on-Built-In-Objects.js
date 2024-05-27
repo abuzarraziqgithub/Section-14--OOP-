@@ -1,0 +1,92 @@
+"use strict";
+
+"use strict";
+
+const Person = function (firstName, birthYear) {
+  //* INSTANCE PROPERTIES
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+
+  //! NEVER DO THIS
+  //* IT WILL CREATE, PERFORMANCE ISSUE AND HUNDREDS OF COPIES FOR HUNDREDS OF INSTANCES.
+  //! IT IS A BAD PRACTICE.
+  //   this.calcAge = function () {
+  // console.log(2027 - birthYear);
+  //   };
+};
+
+const jack = new Person("Jack", 2000);
+console.log(jack);
+console.log(jack instanceof Person);
+const diana = new Person("Diana", 2004);
+console.log(diana.birthYear);
+const abuzar = new Person("Abuzar RaziQ", 2002);
+//* PROTOTYPES
+// EACH AND EVERY FUNCTION IN JAVASCRIPT AUTOMATICALLY HAS A PROPERTY CALLED PROTOTYPE, AND THAT INCLUDES CONSTRUCTOR FUNCTIONS
+// EVERY OBJECT THAT IS CREATED BY A CERTAIN CONSTRUCTOR FUNCTION WILL GET ACCESS TO ALL THE METHODS AND PROPERTIES THAT WE DEFINE ON THE CONSTRUCTORS PROTOTYPE PROPERTY.
+// INSTANCE OF THE CONSTRUCTOR HAS ACCESS TO ALL THE PROPERTIES AND METHODS OF THIER CONSTRUCTOR PROTOTYPE PROPERTY.
+// THIS ALL WORK BECAUSE OF PROTOTYPAL INHERITANCE.
+Person.prototype.calcAgeP = function () {
+  console.log(2024 - this.birthYear);
+};
+
+// THIS PROTOTYPE IS DEFINED IN THE PERSON CONSTRUCTOR PROTOTYPE.
+// SO ANY INSTANCE CAN USE IT AS IT IS IN THE CONSTRUCTOR FUNCTION PROTOTYPE AND WE DON'T HAVE TO CREATE EACH METHOD FOR EACH OF THE INSTANCE.
+// JUST DEFINED IT IN THE PERSON CONTRUCTOR PROTOTYPE AND NOW EVERY INSTANCE HAVE THE ACCESS DUE TO PROTOTYPAL INHERITANCE.
+
+// THE PROTOTYPE OF THE ABUZAR OBJECT IS THE PROTOTYPE PROPERTY OF THE CONSTRUCTOR FUNCTION
+// THE VALUE OF PROTO PROPERTY IS THE PROTOTYPE OF THE CONSTRUCTOR FUNCTION BY WHICH THE OBJECT(INSTANCE) IS CREATED.
+// THAT'S HOW THEY ARE LINKED TO EACH OTHER.
+console.log(abuzar.__proto__);
+console.log(abuzar.__proto__ === Person.prototype); //* TRUE
+// SHOULD THIS PROTOTYPE PROPERTY NOT BE THE PROTOTYPE OF PERSON ? NO
+// PERSON.PROTOTYPE IS ACTUALLY NOT THE PROTOTYPE OF PERSON
+// IT'S GONNA BE USED AS THE PROTOTYPE OF ALL THE OBJECTS THAT ARE CREATED WITH THE PERSON CONSTRUCTOR FUNCTION
+
+// WE CAN CONFRIM THAT THE PERSON.PROTOTYPE IS THE PROTOTYPE PROPERTY OF INSTANCE THAT IS CREATED BY PERSON CONSTRUCTOR.
+console.log(Person.prototype.isPrototypeOf(abuzar)); //* TRUE
+// PERSON.PROTOTYPE IS NOT THE PROTOTYPE OF PERSON
+console.log(Person.prototype.isPrototypeOf(Person)); //* FALSE
+
+// WE CAN ALSO CREATE PROPERIES IN PROTOTYPE
+
+Person.prototype.species = "Homo Sapiens";
+console.log(abuzar.species);
+// THE species IS NOT A PROPERTY OF abuzar, IT IS THE PROPERTY OF THE PERSON PROTOTYPE PROPERTY AND THE abuzar OBJECT HAS ACCESS TO IT BECAUSE OF PROTOTYPAL INHERITANCE.
+
+// WE CAN CHECK IF THE OBJECT HAS IT'S OWN PROPERTY
+console.log(abuzar.hasOwnProperty("firstName")); //* TRUE
+console.log(abuzar.hasOwnProperty("species")); //* FALSE
+console.log(Person.hasOwnProperty("species")); //* FALSE
+console.log(Person.prototype.hasOwnProperty("species")); //* TRUE
+
+// CHECKING PROTOTYPES
+//* PROTOTYPE OF ABUZAR
+console.log(abuzar.__proto__);
+//* OBJECT.PROTOTYPE(TOP OF PROTOTYPE CHAIN)
+console.dir(abuzar.__proto__.__proto__);
+//* OBJECT PROTOTYPE PROPERTY IS NULL.
+console.log(abuzar.__proto__.__proto__.__proto__);
+
+//* POINT BACK THE PERSON CONSTUCTOR FUNCTION
+console.dir(Person.prototype.constructor);
+
+// ARRAYS
+const arr = [3, 5, 3, 21, 2, 34, 1, 2, 37, 89, 7, 4, 3, 4]; //* new Array === []
+console.dir(arr.__proto__);
+console.log(arr.__proto__ === Array.prototype); //* TRUE
+
+console.dir(arr.__proto__.__proto__);
+
+//* CREATING OUR OWN PROTOTYPE METHOD IN ARRAY PROTOTYPE
+
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+//* THIS IS NOT A GOOD IDEA TO CREATE YOUR OWN METHODS OR PROPERTIES IN THE PROTOTYPE
+//* 1ST REASON : THE JS MAY ADD DIFFERENT FUNCTIONALITY FOR THE SAME NAME
+//* 2ND REASON : THE TEAM MAY USE DIFFERENT NAME FOR SAME METHOD IN PROTOTYPE.
+
+console.log(arr.unique());
+
+console.log("Hello world");
