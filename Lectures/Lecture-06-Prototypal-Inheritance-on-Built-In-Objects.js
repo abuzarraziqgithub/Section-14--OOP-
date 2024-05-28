@@ -61,14 +61,16 @@ console.log(Person.hasOwnProperty("species")); //* FALSE
 console.log(Person.prototype.hasOwnProperty("species")); //* TRUE
 
 // CHECKING PROTOTYPES
+// PROTOTYPE CHAIN
 //* PROTOTYPE OF ABUZAR
-console.log(abuzar.__proto__);
+console.log(abuzar.__proto__); //* PERSON PROTOTYPE PROPERTY
 //* OBJECT.PROTOTYPE(TOP OF PROTOTYPE CHAIN)
-console.dir(abuzar.__proto__.__proto__);
+console.dir(abuzar.__proto__.__proto__); //* OBJECT PROTOTYPE PROPERTY
 //* OBJECT PROTOTYPE PROPERTY IS NULL.
-console.log(abuzar.__proto__.__proto__.__proto__);
+console.log(abuzar.__proto__.__proto__.__proto__); //* NULL
 
 //* POINT BACK THE PERSON CONSTUCTOR FUNCTION
+//* THE CONSTRUCTOR OF PROTOTYPE PROPERTY IS PERSON.
 console.dir(Person.prototype.constructor);
 
 // ARRAYS
@@ -88,5 +90,3 @@ Array.prototype.unique = function () {
 //* 2ND REASON : THE TEAM MAY USE DIFFERENT NAME FOR SAME METHOD IN PROTOTYPE.
 
 console.log(arr.unique());
-
-console.log("Hello world");
