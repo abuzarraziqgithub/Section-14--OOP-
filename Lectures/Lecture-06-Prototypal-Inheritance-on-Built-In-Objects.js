@@ -1,7 +1,5 @@
 "use strict";
 
-"use strict";
-
 const Person = function (firstName, birthYear) {
   //* INSTANCE PROPERTIES
   this.firstName = firstName;
