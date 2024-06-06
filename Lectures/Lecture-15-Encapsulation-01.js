@@ -17,7 +17,7 @@ class Account {
   }
 
   deposit(val) {
-    this.movements.push(val);
+    this._movements.push(val);
   }
 
   withdrawal(val) {
